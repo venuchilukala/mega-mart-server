@@ -76,7 +76,7 @@ const deleteProduct = async (req, res) => {
 
         const updatedCart = await cart.save();
 
-        return res.status(200).json({ message: "deleted product " });
+        return res.status(200).json({ message: "deleted product"});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: error.message });
@@ -88,13 +88,11 @@ const deleteProduct = async (req, res) => {
 
 const clearCart = async (req, res) => {
     const cartId = req.params.id; // Or use req.body.email if preferred
-    console.log(`Clearing cart for email: ${cartId}`);
 
     try {
         // Delete all cart items associated with the email
         const result = await Cart.findByIdAndDelete(cartId);
 
-        console.log(result);
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: "No cart items found for the given email." });
         }

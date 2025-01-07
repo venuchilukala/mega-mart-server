@@ -30,7 +30,6 @@ const getProduct = async (req, res) => {
 const postProduct = async (req, res) => {
     try {
         const { name, price, isOnOffer, discountPrice, brand, stock, category, storeId, image, description } = req.body;
-        console.log(storeId)
 
         // Check if the store exists before creating the product
         const store = await Store.findById(storeId);
@@ -66,11 +65,11 @@ const deleteProduct = async (req, res) => {
         }
 
         // Update the associated store's products list
-        const storeId = deletedProduct.storeId; 
+        const storeId = deletedProduct.storeId;
         if (storeId) {
             await Store.findByIdAndUpdate(
                 storeId,
-                { $pull: { products: productId } }, 
+                { $pull: { products: productId } },
                 { new: true }
             );
         }
@@ -85,12 +84,12 @@ const deleteProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const productId = req.params.id
-        const {brand, category, description, discountPrice, image, isOnOffer, name, price, stock, storeId } = req.body 
-        const updatedProduct = await Product.findByIdAndUpdate(productId, 
-            {brand, category, description, discountPrice, image, isOnOffer, name, price, stock, storeId },
-            {new : true , runValidators : true}
+        const { brand, category, description, discountPrice, image, isOnOffer, name, price, stock, storeId } = req.body
+        const updatedProduct = await Product.findByIdAndUpdate(productId,
+            { brand, category, description, discountPrice, image, isOnOffer, name, price, stock, storeId },
+            { new: true, runValidators: true }
         )
-        if(!updatedProduct){
+        if (!updatedProduct) {
             return res.status(404).json({ message: "Product not found" });
         }
         res.status(200).json(updatedProduct)

@@ -66,8 +66,8 @@ app.post("/create-checkout-session", async (req, res) => {
         payment_method_types:["card"],
         line_items:lineItems,
         mode:"payment",
-        success_url:`https://mega-mart-client.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url:`https://mega-mart-client.vercel.app/failure`
+        success_url:`${process.env.FRONT_END_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url:`${process.env.FRONT_END_URL}/failure`
     })
     res.status(200).json({id : session.id})
 })
