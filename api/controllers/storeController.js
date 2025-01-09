@@ -3,7 +3,7 @@ const Store = require("../models/Store")
 // Get all Stores
 const getAllStores = async (req, res) => {
     try {
-        const stores = await Store.find({})
+        const stores = await Store.find({}).sort({createdAt : -1});
         res.status(200).json(stores)
     } catch (error) {
         res.status(500).json({ message: error.message })
